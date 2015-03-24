@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DTO.Mesa;
 import DTO.Plato;
-/*caca git*/
+
 public class principal extends JFrame {
 //caca beto
 	private JPanel contentPane;
