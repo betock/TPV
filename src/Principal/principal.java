@@ -77,32 +77,6 @@ public class principal extends JFrame {
 	public principal() {
 		cargarMemoriaPlatos();
 		cargarMemoriaMesas();
-		// cargar memoria de platos
-		for (int i = 1; i <= 10; i++) {
-			platos.add(new Plato(i, "" + i, "Plato" + i, i));
-		}
-
-		// cargar en memoria las mesas
-		for (int i = 0; i <= 40; i++) {
-			DefaultTableModel modeloVacio = new DefaultTableModel();
-			modeloVacio.addColumn("#");
-			modeloVacio.addColumn("Cantidad");
-			modeloVacio.addColumn("Plato");
-			modeloVacio.addColumn("Importe");
-
-			JTable tableResumenVacio = new JTable(modeloVacio);
-			tableResumenVacio.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			tableResumenVacio.getColumnModel().getColumn(0)
-					.setPreferredWidth(40);
-			tableResumenVacio.getColumnModel().getColumn(1)
-					.setPreferredWidth(60);
-			tableResumenVacio.getColumnModel().getColumn(2)
-					.setPreferredWidth(249);
-			tableResumenVacio.getColumnModel().getColumn(3)
-					.setPreferredWidth(50);
-
-			mesas.add(new Mesa(i, 0, modeloVacio, tableResumenVacio));
-		}
 
 		setTitle("TPV");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -868,10 +842,10 @@ public class principal extends JFrame {
 		}
 		txtVisorAux.setText(nombrePlato);
 		if (cantidad == 1) {
-			txtVisorPrecio.setText(precioPlato * vecesPlu + " Â€");
+			txtVisorPrecio.setText(precioPlato * vecesPlu + " €");
 			txtVisorCantidad.setText("" + vecesPlu);
 		} else {
-			txtVisorPrecio.setText(precioPlato * cantidad + " Â€");
+			txtVisorPrecio.setText(precioPlato * cantidad + " €");
 			txtVisorCantidad.setText("" + cantidad);
 			noPermitirPlu = 1;
 		}
@@ -987,7 +961,7 @@ public class principal extends JFrame {
 			txtVisorAux.setText("NO HAY MESA ABIERTA");
 		} else {
 
-			txtVisorAux.setText(mesaTemp.getTotal() + " Â€");
+			txtVisorAux.setText(mesaTemp.getTotal() + " €");
 			txtVisor.setText("");
 			txtVisorCantidad.setText("");
 			txtVisorPrecio.setText("");
@@ -1112,7 +1086,7 @@ public class principal extends JFrame {
 				if ((int) modelo.getValueAt(i, 1) == 0) {
 					modelo.removeRow(i);
 					nombrePlato = "YA NO QUEDAN";
-					txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " Â€");
+					txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " €");
 					txtVisorCantidad.setText("-" + vecesPlu);
 					vacio = 1;
 				}
@@ -1130,7 +1104,7 @@ public class principal extends JFrame {
 		}
 
 		if (vacio != 1) {
-			txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " Â€");
+			txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " €");
 			txtVisorCantidad.setText("-" + vecesPlu);
 		}
 	}
