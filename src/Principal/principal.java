@@ -31,7 +31,7 @@ import DTO.Mesa;
 import DTO.Plato;
 
 public class principal extends JFrame {
-
+//caca beto
 	private JPanel contentPane;
 	private JTextField txtVisor;
 	private JPanel panel_1;
@@ -666,7 +666,7 @@ public class principal extends JFrame {
 		gbc_buttonAT.gridy = 4;
 		panel.add(buttonAT, gbc_buttonAT);
 
-		// Área declaración de listeners
+		// Ã�rea declaraciÃ³n de listeners
 		buttonMenos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -863,16 +863,16 @@ public class principal extends JFrame {
 		if (encontrado == 0) {
 			double parcial = precioPlato * cantidad;
 			Object[] arrayPlato = { numPlato, cantidad, nombrePlato, parcial };
-			// añadir la fila de resumen
+			// aÃ±adir la fila de resumen
 			modelo.addRow(arrayPlato);
 			mesaTemp.setTotal(mesaTemp.getTotal() + parcial);
 		}
 		txtVisorAux.setText(nombrePlato);
 		if (cantidad == 1) {
-			txtVisorPrecio.setText(precioPlato * vecesPlu + " ");
+			txtVisorPrecio.setText(precioPlato * vecesPlu + " Â€");
 			txtVisorCantidad.setText("" + vecesPlu);
 		} else {
-			txtVisorPrecio.setText(precioPlato * cantidad + " ");
+			txtVisorPrecio.setText(precioPlato * cantidad + " Â€");
 			txtVisorCantidad.setText("" + cantidad);
 			noPermitirPlu = 1;
 		}
@@ -908,7 +908,7 @@ public class principal extends JFrame {
 
 		if (txtVisor.getText().equals("")) {
 			// dar error PENDIENTE
-			txtVisorAux.setText("METER NÚMERO DE PLATO");
+			txtVisorAux.setText("METER NÃšMERO DE PLATO");
 		} else {
 			if (ultimoEsMenos == 1) {
 				txtVisor.setText("");
@@ -956,7 +956,7 @@ public class principal extends JFrame {
 				txtVisorAux.setText("NO EXISTE");
 			} else {
 				// validar si ya existe ese plato en la lista para sumar o
-				// añadir
+				// aÃ±adir
 				if (noPermitirPlu == 1) {
 					txtVisorAux.setText("NO SE PUEDE HACER PLU");
 					noPermitirPlu = 0;
@@ -988,7 +988,7 @@ public class principal extends JFrame {
 			txtVisorAux.setText("NO HAY MESA ABIERTA");
 		} else {
 
-			txtVisorAux.setText(mesaTemp.getTotal() + " ");
+			txtVisorAux.setText(mesaTemp.getTotal() + " Â€");
 			txtVisor.setText("");
 			txtVisorCantidad.setText("");
 			txtVisorPrecio.setText("");
@@ -1113,7 +1113,7 @@ public class principal extends JFrame {
 				if ((int) modelo.getValueAt(i, 1) == 0) {
 					modelo.removeRow(i);
 					nombrePlato = "YA NO QUEDAN";
-					txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " ");
+					txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " Â€");
 					txtVisorCantidad.setText("-" + vecesPlu);
 					vacio = 1;
 				}
@@ -1131,7 +1131,7 @@ public class principal extends JFrame {
 		}
 
 		if (vacio != 1) {
-			txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " ");
+			txtVisorPrecio.setText("-" + precioPlato * vecesPlu + " Â€");
 			txtVisorCantidad.setText("-" + vecesPlu);
 		}
 	}
