@@ -36,25 +36,27 @@ public class principal extends JFrame {
 	private JPanel panel_1;
 	private JTextField txtVisorAux;
 	private JTable tableResumen;
-	int ultimoEsMenos = 0;
-	int ultimoEsPlu = 0;
-	int vecesPlu = 0;
-	int noPermitirPlu = 0;
-	int vacio = 0;
-	int mesa = 0;
-	int mesaAbierta = 0;
-	DefaultTableModel modelo = new DefaultTableModel();
+	private int ultimoEsMenos = 0;
+	private int ultimoEsPlu = 0;
+	private int ultimoEsAMT = 0;
+	private int vecesPlu = 0;
+	private int noPermitirPlu = 0;
+	private int vacio = 0;
+	private int mesa = 0;
+	private int mesaAbierta = 0;
+	private double importeAMT = 0;
+	private DefaultTableModel modelo = new DefaultTableModel();
 	private JTextField txtVisorCantidad;
 	private JTextField txtVisorPrecio;
 	private JTextField txtMesa;
-	int cantidad = 0;
-	String nombrePlato = "";
-	double precioPlato = 0;
-	int numPlato = 0;
-	public Mesa mesaTemp = null;
-	ArrayList<Plato> platos = new ArrayList<Plato>();
-	ArrayList<Mesa> mesas = new ArrayList<Mesa>();
-	JScrollPane scrollPane = new JScrollPane();
+	private int cantidad = 0;
+	private String nombrePlato = "";
+	private double precioPlato = 0;
+	private int numPlato = 0;
+	private Mesa mesaTemp = null;
+	private ArrayList<Plato> platos = new ArrayList<Plato>();
+	private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
+	private JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Launch the application.
@@ -836,7 +838,7 @@ public class principal extends JFrame {
 		if (encontrado == 0) {
 			double parcial = precioPlato * cantidad;
 			Object[] arrayPlato = { numPlato, cantidad, nombrePlato, parcial };
-			// aÃ±adir la fila de resumen
+			// añadir la fila de resumen
 			modelo.addRow(arrayPlato);
 			mesaTemp.setTotal(mesaTemp.getTotal() + parcial);
 		}
@@ -849,10 +851,11 @@ public class principal extends JFrame {
 			txtVisorCantidad.setText("" + cantidad);
 			noPermitirPlu = 1;
 		}
+		ultimoEsAMT = 0;
 	}
 
 	public void accionesComunBotones() {
-		if (ultimoEsPlu == 1 || ultimoEsMenos == 1) {
+		if (ultimoEsPlu == 1 || ultimoEsMenos == 1 || ultimoEsAMT == 1) {
 			txtVisor.setText("");
 			txtVisorAux.setText("");
 			txtVisorPrecio.setText("");
@@ -881,7 +884,7 @@ public class principal extends JFrame {
 
 		if (txtVisor.getText().equals("")) {
 			// dar error PENDIENTE
-			txtVisorAux.setText("METER NÃšMERO DE PLATO");
+			txtVisorAux.setText("METER NÚMERO DE PLATO");
 		} else {
 			if (ultimoEsMenos == 1) {
 				txtVisor.setText("");
@@ -905,7 +908,6 @@ public class principal extends JFrame {
 							cadena.indexOf("x")));
 					cadena = cadena.substring(cadena.indexOf("x") + 1);
 					cantidad = Integer.parseInt(cadena);
-
 				}
 			} catch (Exception e) {
 				cantidad = 1;
@@ -920,7 +922,12 @@ public class principal extends JFrame {
 				Plato plato = iteradorPlato.next();
 				if (plato.getNumero() == numPlato) {
 					nombrePlato = plato.getNombre();
-					precioPlato = plato.getPrecio();
+					if (ultimoEsAMT == 1){
+						precioPlato = importeAMT;
+					}
+					else{
+						precioPlato = plato.getPrecio();	
+					}
 					encontradoPlato = 1;
 				}
 			}
@@ -929,7 +936,7 @@ public class principal extends JFrame {
 				txtVisorAux.setText("NO EXISTE");
 			} else {
 				// validar si ya existe ese plato en la lista para sumar o
-				// aÃ±adir
+				// añadir
 				if (noPermitirPlu == 1) {
 					txtVisorAux.setText("NO SE PUEDE HACER PLU");
 					noPermitirPlu = 0;
@@ -937,15 +944,10 @@ public class principal extends JFrame {
 					txtVisorPrecio.setText("");
 					txtVisorCantidad.setText("");
 				} else {
-					// comprobarExisteEnLista(modelo, cantidad, numPlato,
-					// precioPlato, nombrePlato);
 					comprobarExisteEnLista();
+					
 				}
 			}
-
-			// borrar visor
-			// txtVisor.setText("");
-
 		}
 		ultimoEsPlu = 1;
 	}
@@ -964,7 +966,7 @@ public class principal extends JFrame {
 			txtVisorAux.setText(mesaTemp.getTotal() + " €");
 			txtVisor.setText("");
 			txtVisorCantidad.setText("");
-			txtVisorPrecio.setText("");
+			txtVisorPrecio.setText("Mesa " + mesaTemp.getNumero());
 			txtMesa.setText("");
 			mesa = 0;
 			mesaAbierta = 0;
@@ -1027,7 +1029,7 @@ public class principal extends JFrame {
 			}
 			vecesPlu = vecesPlu + 1;
 			String cadena = txtVisor.getText();
-			int numPlato = 0;
+			numPlato = 0;
 			try {
 				if (cadena.indexOf("x") == -1) {
 					cantidad = 1;
@@ -1040,7 +1042,6 @@ public class principal extends JFrame {
 			}
 
 			// validar si existe el plato en la carta
-
 			Iterator<Plato> iterador = platos.iterator();
 			int encontradoPlato = 0;
 
@@ -1110,7 +1111,23 @@ public class principal extends JFrame {
 	}
 
 	public void funcionAMT() {
-
+		ultimoEsAMT = 0;
+		if (txtVisor.getText().equals("")) {
+			// dar error PENDIENTE
+			txtVisorAux.setText("NO HAY AMT");
+		} else {
+			String cadena = txtVisor.getText();
+			try {
+				if (cadena.indexOf(".") == -1) {
+					txtVisorAux.setText("FALTA EL PUNTO");
+				} else {
+					importeAMT = Double.parseDouble(txtVisor.getText());
+					ultimoEsAMT = 1;
+					txtVisorAux.setText("AMT");
+				}
+			} catch (Exception e) {
+				txtVisorAux.setText("ERROR");
+			}
+		}
 	}
-
 }
