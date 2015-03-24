@@ -72,7 +72,7 @@ public class principal extends JFrame {
 			}
 		});
 	}
-/*caca 2*/
+/*caca 3*/
 	/**
 	 * Create the frame.
 	 */
